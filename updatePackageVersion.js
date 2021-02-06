@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const packageJsonPath = './package.json';
+const packageJsonPath = '/github/workspace/package.json';
 const packageJson = require(packageJsonPath);
 packageJson.version = process.argv[2];
 
