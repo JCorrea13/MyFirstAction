@@ -1,5 +1,4 @@
-console.log('Executing JS script');
-var fs = require('fs');
+const fs = require('fs');
 
 const packageJsonPath = './package.json';
 const packageJson = require(packageJsonPath);
