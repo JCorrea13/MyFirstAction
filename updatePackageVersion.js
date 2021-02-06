@@ -1,7 +1,7 @@
 const semver = require('./semver');
 const fs = require('fs');
 
-const packageJsonPath = './github/workspace/package.json';
+const packageJsonPath = '/github/workspace/package.json';
 const packageJson = require(packageJsonPath);
 const versionToRelease = process.argv[2].toLowerCase();
 
