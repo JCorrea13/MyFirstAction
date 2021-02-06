@@ -1,3 +1,4 @@
+console.log('Executing JS script');
 var fs = require('fs');
 
 const packageJsonPath = './package.json';
