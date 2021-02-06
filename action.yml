@@ -1,8 +1,8 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Release Node Package'
+description: 'This action releases a Node Package'
 inputs:
-  release-version:
+  VERSION:
     description: 'Release Version ( PATCH | MINOR | MAJOR )'
     required: true
     default: 'PATCH'
@@ -10,4 +10,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.release-version }}
+    - ${{ inputs.VERSION }}

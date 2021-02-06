@@ -1,9 +1,9 @@
 FROM node:10-alpine AS node
-ARG release-version
+ARG VERSION
 
 COPY . .
 
-RUN echo $release-version
+RUN echo $VERSION
 
 RUN chmod +x entrypoint.sh
-ENTRYPOINT ["sh","/entrypoint.sh", "echo $release-version"]
+ENTRYPOINT ["sh","/entrypoint.sh", $VERSION]
