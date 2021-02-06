@@ -1,5 +1,5 @@
 FROM node:10-alpine AS node
-ARG VERSION
+ARG package-version
 
 COPY . .
 

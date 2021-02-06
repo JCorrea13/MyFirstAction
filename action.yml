@@ -2,7 +2,7 @@
 name: 'Release Node Package'
 description: 'This action releases a Node Package'
 inputs:
-  VERSION:
+  package-version:
     description: 'Release Version ( PATCH | MINOR | MAJOR )'
     required: true
     default: 'PATCH'
@@ -10,4 +10,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.VERSION }}
+    - ${{ inputs.package-version }}
