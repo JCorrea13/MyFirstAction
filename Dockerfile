@@ -3,4 +3,4 @@ ARG release-version
 COPY . .
 
 RUN chmod +x entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh", "$release-version"]
+ENTRYPOINT ["sh","entrypoint.sh", "$release-version"]
