@@ -1,4 +1,6 @@
+echo "This is root?"
 ls .
-cd /github/workspace
+echo "This is the workspace"
+ls /github/workspace
 node /updatePackageVersion.js $1
 echo "Releasing: $1"
