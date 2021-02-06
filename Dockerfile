@@ -3,7 +3,5 @@ ARG VERSION
 
 COPY . .
 
-RUN echo $VERSION
-
 RUN chmod +x entrypoint.sh
-ENTRYPOINT ["sh","/entrypoint.sh", $VERSION]
+ENTRYPOINT ["/entrypoint.sh"]
