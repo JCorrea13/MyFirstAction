@@ -5,4 +5,4 @@ COPY . .
 RUN ls
 
 RUN chmod +x entrypoint.sh
-ENTRYPOINT ["sh","entrypoint.sh", "$release-version"]
+ENTRYPOINT ["sh","/entrypoint.sh", "$release-version"]
