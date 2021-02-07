@@ -10,13 +10,13 @@ core.info(process.cwd());
     await git.addConfig('user.email', process.env.GITHUB_ACTOR, undefined);
     await git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined);
     
-    await git.add('.');
     await git.pull('master');
-
+    
     const newVersion = ops.updateVersion(actionType, core.info);
     const diff = git.diff('./package.json');
     core.info(JSON.stringify(diff));
     core.info(newVersion);
+    await git.add('.');
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push(
         undefined,
