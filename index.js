@@ -14,7 +14,7 @@ const git = simpleGit();
 
     const newVersion = ops.updateVersion(actionType);
     await git.commit(`Releasing Version: ${newVersion}`);
-    await git.push('master');
+    await git.push('origin','master');
 })().then((r) => {
     core.info('successsss!');
     core.info(r);
