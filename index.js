@@ -14,10 +14,22 @@ const git = simpleGit();
 
     const newVersion = ops.updateVersion(actionType);
     await git.commit(`Releasing Version: ${newVersion}`);
-    await git.push('origin','master');
-})().then((r) => {
+    await git.pushgit.push(
+        undefined,
+        undefined,
+        pushOption.split(' '),
+        (err, data) => {
+          if (data) {
+              core.info('Pushed:');
+              core.info(data);
+          } else {
+            core.info('Push Error:');
+            core.info(err);
+          }
+        }
+      );
+})().then(() => {
     core.info('successsss!');
-    core.info(r);
 })
 .catch((e) => {
     core.info('error:');
