@@ -17,7 +17,7 @@ const git = simpleGit();
     await git.push(
         undefined,
         undefined,
-        pushOption.split(' '),
+        [],
         (err, data) => {
           if (data) {
               core.info('Pushed:');
