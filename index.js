@@ -13,7 +13,8 @@ const git = simpleGit();
     await git.pull('master');
 
     const newVersion = ops.updateVersion(actionType);
-    core.info(git.diff('package.json'));
+    const diff = git.diff('package.json');
+    core.info(JSON.stringify(diff));
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push(
         undefined,
@@ -22,10 +23,10 @@ const git = simpleGit();
         (err, data) => {
           if (data) {
               core.info('Pushed:');
-              core.info(data);
+              core.info(JSON.stringify(data));
           } else {
             core.info('Push Error:');
-            core.info(err);
+            core.info(JSON.stringify(err));
           }
         }
       );
