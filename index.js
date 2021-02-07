@@ -1,5 +1,5 @@
 import { info, getInput } from '@actions/core'
 
-const actionType = getInput('actionType');
+const actionType = getInput('action-type');
 info('Executing Script');
 info(actionType);

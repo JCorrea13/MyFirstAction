@@ -2,7 +2,7 @@
 name: 'Action Type'
 description: 'This action releases a Node Package or Merge Back a Release'
 inputs:
-  package-version:
+  action-type:
     description: 'Action Type ( Release | Back )'
     required: true
     default: 'Release'
