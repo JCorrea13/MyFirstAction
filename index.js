@@ -4,7 +4,7 @@ const ops = require('./jsonOperations');
 
 const actionType = core.getInput('action-type');
 const git = simpleGit({ baseDir: process.cwd() });
-core.info(actionType);
+core.info(process.cwd());
 
 ( async () => {
     await git.addConfig('user.email', process.env.GITHUB_ACTOR, undefined);
