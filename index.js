@@ -1,5 +1,8 @@
-const core = require('@actions/core');
+import {
+    info,
+    getInput
+  } from '@actions/core'
 
-const actionType = core.getInput('action-type');
-core.info('Executing Script');
-core.info(actionType);
+const actionType = getInput('action-type');
+info('Executing Script');
+info(actionType);
