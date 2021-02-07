@@ -11,7 +11,7 @@ const newVersion = ops.updateVersion(actionType);
     await git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined);
 
     await git.add('.');
-    await git.pull();
+    await git.pull('master');
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push();
 })().then(() => {
