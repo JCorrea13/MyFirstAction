@@ -10,4 +10,10 @@ ops.updateVersion(actionType);
     await git.add();
     await git.commit();
     await git.push();
-})();
+})().then(() => {
+    core.info('successsss!');
+})
+.catch((e) => {
+    core.info('error:');
+    core.info(e);
+});
