@@ -1,10 +1,5 @@
-import {
-    info,
-    getInput
-  } from '@actions/core'
+const core = require('@actions/core');
 
-(() => {
-    const actionType = getInput('action-type');
-    info('Executing Script');
-    info(actionType)
-})();
+const actionType = core.getInput('action-type');
+core.info('Executing Script');
+core.info(actionType)
