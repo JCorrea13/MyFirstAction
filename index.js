@@ -12,7 +12,7 @@ core.info(process.cwd());
     
     await git.pull('master');
     
-    const newVersion = ops.updateVersion(actionType, core.info);
+    const newVersion = ops.updateVersion(actionType, process.cwd());
     const diff = git.diff('./package.json');
     core.info(JSON.stringify(diff));
     core.info(newVersion);

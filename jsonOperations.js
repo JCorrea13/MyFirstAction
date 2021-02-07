@@ -1,9 +1,9 @@
 const actions = require('./actions');
 
-const updateVersion = (action) => {
+const updateVersion = (action, cwd) => {
     const fs = require('fs');
 
-    const packageJsonPath = './package.json';
+    const packageJsonPath = `${cwd}/package.json`;
     const packageJson = require(packageJsonPath);
 
     const currentVersion = packageJson.version.split('.');
