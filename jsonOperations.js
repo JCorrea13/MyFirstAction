@@ -3,7 +3,7 @@ const actions = require('./actions');
 const updateVersion = (action) => {
     const fs = require('fs');
 
-    const packageJsonPath = '/github/workspace/package.json';
+    const packageJsonPath = './package.json';
     const packageJson = require(packageJsonPath);
 
     const currentVersion = packageJson.version.split('.');
