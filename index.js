@@ -4,6 +4,7 @@ const ops = require('./jsonOperations');
 
 const actionType = core.getInput('action-type');
 const git = simpleGit();
+core.info(actionType);
 
 ( async () => {
     await git.addConfig('user.email', process.env.GITHUB_ACTOR, undefined);
@@ -12,9 +13,10 @@ const git = simpleGit();
     await git.add('.');
     await git.pull('master');
 
-    const newVersion = ops.updateVersion(actionType);
-    const diff = git.diff('package.json');
+    const newVersion = ops.updateVersion(actionType, core.info);
+    const diff = git.diff('./package.json');
     core.info(JSON.stringify(diff));
+    core.info(newVersion);
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push(
         undefined,

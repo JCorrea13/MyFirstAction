@@ -1,6 +1,6 @@
 const actions = require('./actions');
 
-const updateVersion = (action) => {
+const updateVersion = (action => {
     const fs = require('fs');
 
     const packageJsonPath = './package.json';
