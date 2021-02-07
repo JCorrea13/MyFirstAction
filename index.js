@@ -3,7 +3,7 @@ const simpleGit = require('simple-git');
 const ops = require('./jsonOperations');
 
 const actionType = core.getInput('action-type');
-const git = simpleGit({ baseDir: '/github/workspace' });
+const git = simpleGit();
 
 const newVersion = ops.updateVersion(actionType);
 ( async () => {
@@ -11,7 +11,7 @@ const newVersion = ops.updateVersion(actionType);
     await git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined);
 
     await git.add('.');
-    await git.fetch();
+    await git.pull();
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push();
 })().then(() => {
