@@ -1,13 +1,11 @@
 # action.yml
-name: 'Release Node Package'
-description: 'This action releases a Node Package'
+name: 'Action Type'
+description: 'This action releases a Node Package or Merge Back a Release'
 inputs:
   package-version:
-    description: 'Release Version ( PATCH | MINOR | MAJOR )'
+    description: 'Action Type ( Release | Back )'
     required: true
-    default: 'PATCH'
+    default: 'Release'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.package-version }}
+  using: node12
+  main: index.js
