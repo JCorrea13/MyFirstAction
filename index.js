@@ -10,8 +10,8 @@ const git = simpleGit();
     await git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined);
     
     await git.add('.');
-    await git.pull('master');
-    
+    await git.fetch();
+
     const newVersion = ops.updateVersion(actionType);
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push();
