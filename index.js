@@ -6,6 +6,8 @@ const actionType = core.getInput('action-type');
 const git = simpleGit();
 
 ops.updateVersion(actionType);
-await git.add();
-await git.commit();
-await git.push();
+( async () => {
+    await git.add();
+    await git.commit();
+    await git.push();
+})();
