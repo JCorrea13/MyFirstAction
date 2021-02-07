@@ -7,6 +7,7 @@ const git = simpleGit();
 
 ops.updateVersion(actionType);
 ( async () => {
+    await git.fetch();
     await git.add();
     await git.commit();
     await git.push();
