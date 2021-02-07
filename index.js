@@ -3,7 +3,7 @@ const simpleGit = require('simple-git');
 const ops = require('./jsonOperations');
 
 const actionType = core.getInput('action-type');
-const git = simpleGit();
+const git = simpleGit({ baseDir: process.cwd() });
 core.info(actionType);
 
 ( async () => {
