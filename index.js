@@ -13,6 +13,7 @@ const git = simpleGit();
     await git.pull('master');
 
     const newVersion = ops.updateVersion(actionType);
+    core.info(git.diff('package.json'));
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push(
         undefined,
