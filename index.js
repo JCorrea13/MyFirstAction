@@ -7,8 +7,7 @@ const git = simpleGit({ baseDir: process.cwd() });
 
 const pushReleaseVersion = async () => {
     await git.fetch();
-    await git.checkout(['master']);
-    await git.merge(['origin/dev']);
+    await git.mergeFromTo('dev', 'master');
 
     const newVersion = ops.updateVersion(actionType, process.cwd());
     await git.add('.');
