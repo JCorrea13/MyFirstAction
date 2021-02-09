@@ -9,8 +9,7 @@ const octokit = github.getOctokit(token);
 const repo = github.context.repo;
 
 const pushReleaseVersion = async () => {
-    
-    ops.updateVersion(actionType, process.cwd());
+    const newVersion = ops.updateVersion(actionType, process.cwd());
     await octokit.repos.merge({
         owner: repo.owner,
         repo: repo.repo,
