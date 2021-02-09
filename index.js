@@ -7,7 +7,7 @@ const git = simpleGit({ baseDir: process.cwd() });
 
 const pushReleaseVersion = async () => {    
     await git.pull();
-    await git.merge('dev');
+    await git.merge(['dev']);
 
     const newVersion = ops.updateVersion(actionType, process.cwd());
     await git.add('.');
@@ -29,5 +29,6 @@ configureGit()
 .catch((err) => {
     if(err.git) createMergeBranch();
 
-    throw err;
+    console.log(err);
+    core.error(err);
 });
