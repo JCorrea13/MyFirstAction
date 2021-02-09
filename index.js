@@ -27,7 +27,7 @@ configureGit()
     core.info(`Successfully Released: ${version}`);
 })
 .catch((err) => {
-    if(err.git) createMergeBranch();
+    // if(err.git) createMergeBranch();
 
     console.log(err);
     core.error(err);
