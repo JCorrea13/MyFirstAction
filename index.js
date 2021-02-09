@@ -11,7 +11,7 @@ const repo = github.context.repo;
 const pushReleaseVersion = async () => {
     const git = simpleGit({ baseDir: process.cwd() });
     await git.pull();
-    await octokit.repos.update({ name: repo.repo });
+    await octokit.repos.update({ owner: repo.owner ,name: repo.repo });
     
     const newVersion = ops.updateVersion(actionType, process.cwd());
     await octokit.repos.merge({
