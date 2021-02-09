@@ -11,16 +11,16 @@ const repo = github.context.repo;
 const pushReleaseVersion = async () => {
     const git = simpleGit({ baseDir: process.cwd() });
     await git.pull();
-
+    
+    const newVersion = ops.updateVersion(actionType, process.cwd());
     await octokit.repos.merge({
         owner: repo.owner,
         repo: repo.repo,
         base: 'master',
         head: 'dev',
-        commit_message: commitMessage
+        commit_message: `Releasing Version: ${newVersion}`
     });
 
-    const newVersion = ops.updateVersion(actionType, process.cwd());
     await git.add('.');
     await git.commit(`Releasing Version: ${newVersion}`);
     await git.push();
@@ -44,5 +44,5 @@ configureGit()
     // if(err.git) createMergeBranch();
 
     console.log(err);
-    core.error(JSON.stringify(err.git.conflicts));
+    core.error(err);
 });
