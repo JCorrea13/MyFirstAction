@@ -6,6 +6,7 @@ const actionType = core.getInput('action-type');
 const git = simpleGit({ baseDir: process.cwd() });
 
 const pushReleaseVersion = async () => {    
+    await git.checkout('master');
     await git.pull();
     await git.merge(['origin/dev']);
 
