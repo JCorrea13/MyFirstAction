@@ -5,14 +5,10 @@ const ops = require('./jsonOperations');
 const actionType = core.getInput('action-type');
 const git = simpleGit({ baseDir: process.cwd() });
 
-const pushReleaseVersion = async () => {    
-    core.info(`CWD ${JSON.stringify(process.cwd())}`);
+const pushReleaseVersion = async () => {
     await git.fetch();
     await git.checkout(['master']);
-    core.info(`CWD (after checkout) ${JSON.stringify(process.cwd())}`);
-    await git.pull(['origin/master']);
-    await git.pull(['origin/dev']);
-    await git.merge({ baseDir: process.cwd(), });
+    await git.merge(['dev']);
 
     const newVersion = ops.updateVersion(actionType, process.cwd());
     await git.add('.');
