@@ -6,11 +6,11 @@ const actionType = core.getInput('action-type');
 const git = simpleGit({ baseDir: process.cwd() });
 
 const pushReleaseVersion = async () => {    
-    core.info(`Current Branch ${JSON.stringify(git.branch())}`);
-    await git.checkout('master');
-    core.info(`Current Branch (after checkout) ${JSON.stringify(git.branch())}`);
+    core.info(`CWD ${JSON.stringify(process.cwd())}`);
+    await git.checkout(['origin/master']);
+    core.info(`CWD (after checkout) ${JSON.stringify(process.cwd())}`);
     await git.pull();
-    await git.merge(['origin/dev']);
+    await git.merge({ baseDir: process.cwd(), });
 
     const newVersion = ops.updateVersion(actionType, process.cwd());
     await git.add('.');
