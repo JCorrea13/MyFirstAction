@@ -10,6 +10,14 @@ const repo = github.context.repo;
 
 const pushReleaseVersion = async () => {
     const newVersion = ops.updateVersion(actionType, process.cwd());
+
+    await octokit.pulls.create({
+      owner: repo.owner,
+      repo: repo.repo,
+      head: `Chore/ReleaseSprint${newVersion.replace('.', '')}`,
+      base: 'master',
+    });
+
     await octokit.repos.merge({
         owner: repo.owner,
         repo: repo.repo,
@@ -17,6 +25,8 @@ const pushReleaseVersion = async () => {
         head: 'dev',
         commit_message: `Releasing Version: ${newVersion}`
     });
+
+    octokit.repos.createOrUpdateFileContents()
 
     return newVersion;
 };
