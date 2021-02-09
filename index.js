@@ -32,7 +32,7 @@ const pushReleaseVersion = async () => {
         ref: 'refs/heads/featureA'
     });
 
-    core.info(JSON.stringify(repository));
+    core.info(JSON.stringify(packageJson));
     
     octokit.repos.createOrUpdateFileContents({
         owner: repo.owner,
