@@ -9,7 +9,7 @@ const octokit = github.getOctokit(token);
 const repo = github.context.repo;
 
 const pushReleaseVersion = async () => {
-    const packageJson = ops.updateVersion(actionType, process.cwd());
+    const newJson = ops.updateVersion(actionType, process.cwd());
 
     /*const masterBranch = await octokit.git.getRef({
         owner: repo.owner,
@@ -37,9 +37,9 @@ const pushReleaseVersion = async () => {
     octokit.repos.createOrUpdateFileContents({
         owner: repo.owner,
         repo: repo.repo,
-        path: './packageJson',
-        message: 'Updating Package Version',
-        content: packageJson,
+        path: 'packageJson',
+        message: `Updating Package Version to ${newJson.version}`,
+        content: newJson,
         sha: packageJson.sha
     });
 
