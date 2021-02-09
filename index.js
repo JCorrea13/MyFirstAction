@@ -47,7 +47,7 @@ const pushReleaseVersion = async () => {
             name: process.env.GITHUB_ACTOR,
             email: `${process.env.GITHUB_ACTOR}@users.noreply.github.com`,
         },
-        branch: 'heads/featureA'
+        branch: 'featureA'
     });
 
     /*await octokit.pulls.create({
