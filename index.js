@@ -1,17 +1,24 @@
 const core = require('@actions/core');
 const simpleGit = require('simple-git');
 const ops = require('./jsonOperations');
+const github = require('@actions/github');
 
 const actionType = core.getInput('action-type');
+const token = core.getInput('github_token');
+const octokit = github.getOctokit(token);
+const repo = github.context.repo;
 
 const pushReleaseVersion = async () => {
     const git = simpleGit({ baseDir: process.cwd() });
     await git.pull();
 
-    core.info('Diff')
-    core.info(JSON.stringify(git.diff('master', 'dev')))
-    core.info('----------')
-    await git.merge(['origin/dev', '--allow-unrelated-histories']);
+    await octokit.repos.merge({
+        owner: repo.owner,
+        repo: repo.repo,
+        base: 'master',
+        head: 'dev',
+        commit_message: commitMessage
+    });
 
     const newVersion = ops.updateVersion(actionType, process.cwd());
     await git.add('.');
