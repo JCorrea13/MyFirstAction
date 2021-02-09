@@ -23,7 +23,7 @@ const pushReleaseVersion = async () => {
         owner: repo.owner,
         repo: repo.repo,
         ref: 'refs/heads/featureA',
-        sha: masterBranch.object.sha
+        sha: masterBranch.data.object.sha
     });
 
     /*await octokit.pulls.create({
