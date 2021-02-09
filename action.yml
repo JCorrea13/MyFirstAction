@@ -10,6 +10,9 @@ inputs:
     description: 'Token used to authenticate with GitHub when performing the merge command.'
     required: false
     default: ${{ github.token }}
+  sprint:
+    description: 'Sprint Number'
+    required: true
 runs:
   using: node12
   main: index.js

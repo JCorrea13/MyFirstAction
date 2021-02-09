@@ -5,31 +5,31 @@ const github = require('@actions/github');
 
 const actionType = core.getInput('action-type');
 const token = core.getInput('github_token');
+const sprint = core.getInput('sprint');
 const octokit = github.getOctokit(token);
 const repo = github.context.repo;
 
 const pushReleaseVersion = async () => {
     const newJson = ops.updateVersion(actionType, process.cwd());
 
-    /*const masterBranch = await octokit.git.getRef({
+    const masterBranch = await octokit.git.getRef({
         owner: repo.owner,
         repo: repo.repo,
         ref: 'heads/master'
     });
-
     
     await octokit.git.createRef({
         owner: repo.owner,
         repo: repo.repo,
-        ref: 'refs/heads/featureA',
+        ref: `refs/heads/Chore/Sprint${sprint}`,
         sha: masterBranch.data.object.sha
-    });*/
+    });
     
     const packageJson = await octokit.repos.getContent({ 
         owner: repo.owner,
         repo: repo.repo,
         path: 'package.json',
-        ref: 'refs/heads/featureA'
+        ref: `refs/heads/Chore/Sprint${sprint}`
     });
     
     await octokit.repos.createOrUpdateFileContents({
@@ -47,23 +47,23 @@ const pushReleaseVersion = async () => {
             name: process.env.GITHUB_ACTOR,
             email: `${process.env.GITHUB_ACTOR}@users.noreply.github.com`,
         },
-        branch: 'featureA'
+        branch: `Chore/Sprint${sprint}`
     });
 
-    /*await octokit.pulls.create({
-      owner: repo.owner,
-      repo: repo.repo,
-      head: `Chore/ReleaseSprint`,
-      base: 'master',
-    });*/
-
-    /*await octokit.repos.merge({
+    await octokit.repos.merge({
         owner: repo.owner,
         repo: repo.repo,
-        base: 'master',
+        base: `Chore/Sprint${sprint}`,
         head: 'dev',
-        commit_message: `Releasing Version: ${newVersion}`
-    });*/
+        commit_message: 'Merging Dev'
+    });
+
+    await octokit.pulls.create({
+      owner: repo.owner,
+      repo: repo.repo,
+      head: `Chore/Sprint${sprint}`,
+      base: 'master',
+    });
 
     return newJson.version;
 };
