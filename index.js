@@ -18,15 +18,13 @@ const pushReleaseVersion = async () => {
       base: 'master',
     });
 
-    await octokit.repos.merge({
+    /*await octokit.repos.merge({
         owner: repo.owner,
         repo: repo.repo,
         base: 'master',
         head: 'dev',
         commit_message: `Releasing Version: ${newVersion}`
-    });
-
-    octokit.repos.createOrUpdateFileContents()
+    });*/
 
     return newVersion;
 };
