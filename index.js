@@ -3,9 +3,9 @@ const simpleGit = require('simple-git');
 const ops = require('./jsonOperations');
 
 const actionType = core.getInput('action-type');
-const git = simpleGit({ baseDir: process.cwd() });
 
 const pushReleaseVersion = async () => {
+    const git = simpleGit({ baseDir: process.cwd() });
     await git.pull();
     await git.merge(['origin/dev']);
 
@@ -17,9 +17,12 @@ const pushReleaseVersion = async () => {
     return newVersion;
 };
 
-const configureGit = () => 
-    git.addConfig('user.email', process.env.GITHUB_ACTOR, undefined)
+const configureGit = () => {
+    const git = simpleGit({ baseDir: process.cwd() });
+
+    return git.addConfig('user.email', process.env.GITHUB_ACTOR, undefined)
     .then(() => git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined));
+}
 
 configureGit()
 .then(pushReleaseVersion)
