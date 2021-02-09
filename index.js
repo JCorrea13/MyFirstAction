@@ -5,17 +5,6 @@ const ops = require('./jsonOperations');
 const actionType = core.getInput('action-type');
 const git = simpleGit({ baseDir: process.cwd() });
 
-configureGit()
-.then(pushReleaseVersion)
-.then((version) => {
-    core.info(`Successfully Released: ${version}`);
-})
-.catch((err) => {
-    if(err.git) createMergeBranch();
-
-    throw err;
-});
-
 const pushReleaseVersion = async () => {    
     await git.pull();
     await git.merge('dev');
@@ -31,3 +20,14 @@ const pushReleaseVersion = async () => {
 const configureGit = () => 
     git.addConfig('user.email', process.env.GITHUB_ACTOR, undefined)
     .then(() => git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined));
+
+configureGit()
+.then(pushReleaseVersion)
+.then((version) => {
+    core.info(`Successfully Released: ${version}`);
+})
+.catch((err) => {
+    if(err.git) createMergeBranch();
+
+    throw err;
+});
