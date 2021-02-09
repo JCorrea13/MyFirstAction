@@ -39,7 +39,7 @@ const pushReleaseVersion = async () => {
         repo: repo.repo,
         path: 'packageJson',
         message: `Updating Package Version to ${newJson.version}`,
-        content: JSON.stringify(newJson),
+        content: Buffer.from(JSON.stringify(newJson)).toString('base64'),
         sha: packageJson.data.sha,
         committer: {
             name: process.env.GITHUB_ACTOR,
