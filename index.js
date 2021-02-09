@@ -7,7 +7,7 @@ const actionType = core.getInput('action-type');
 const pushReleaseVersion = async () => {
     const git = simpleGit({ baseDir: process.cwd() });
     await git.pull();
-    await git.merge(['origin/dev']);
+    await git.merge(['origin/dev', '--allow-unrelated-histories']);
 
     const newVersion = ops.updateVersion(actionType, process.cwd());
     await git.add('.');
