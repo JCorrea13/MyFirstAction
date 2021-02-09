@@ -9,7 +9,7 @@ const octokit = github.getOctokit(token);
 const repo = github.context.repo;
 
 const pushReleaseVersion = async () => {
-    const newVersion = ops.updateVersion(actionType, process.cwd());
+    const packageJson = ops.updateVersion(actionType, process.cwd());
 
     const masterBranch = await octokit.git.getRef({
         owner: repo.owner,
@@ -17,14 +17,30 @@ const pushReleaseVersion = async () => {
         ref: 'heads/master'
     });
 
-    core.info(JSON.stringify(masterBranch));
-
+    
     await octokit.git.createRef({
         owner: repo.owner,
         repo: repo.repo,
         ref: 'refs/heads/featureA',
         sha: masterBranch.data.object.sha
     });
+    
+    const repository = await octokit.repos.getContent({ 
+        owner: repo.owner,
+        repo: repo.repo,
+        path: './packageJson'
+    });
+
+    core.info(JSON.stringify(repository));
+    
+    /*octokit.repos.createOrUpdateFileContents({
+        owner: repo.owner,
+        repo: repo.repo,
+        path: './packageJson',
+        message: 'Updating Package Version',
+        content: packageJson,
+        sha: 
+    });*/
 
     /*await octokit.pulls.create({
       owner: repo.owner,
