@@ -11,7 +11,7 @@ const repo = github.context.repo;
 const pushReleaseVersion = async () => {
     const packageJson = ops.updateVersion(actionType, process.cwd());
 
-    const masterBranch = await octokit.git.getRef({
+    /*const masterBranch = await octokit.git.getRef({
         owner: repo.owner,
         repo: repo.repo,
         ref: 'heads/master'
@@ -23,12 +23,13 @@ const pushReleaseVersion = async () => {
         repo: repo.repo,
         ref: 'refs/heads/featureA',
         sha: masterBranch.data.object.sha
-    });
+    });*/
     
     const repository = await octokit.repos.getContent({ 
         owner: repo.owner,
         repo: repo.repo,
-        path: './packageJson'
+        path: './packageJson',
+        ref: 'refs/heads/featureA'
     });
 
     core.info(JSON.stringify(repository));
