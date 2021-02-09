@@ -37,5 +37,5 @@ configureGit()
     // if(err.git) createMergeBranch();
 
     console.log(err);
-    core.error(JSON.stringify(err));
+    core.error(JSON.stringify(err.git.conflicts));
 });
