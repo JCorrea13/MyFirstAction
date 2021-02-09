@@ -9,10 +9,8 @@ const octokit = github.getOctokit(token);
 const repo = github.context.repo;
 
 const pushReleaseVersion = async () => {
-    const git = simpleGit({ baseDir: process.cwd() });
-    await git.pull();
-    await octokit.pulls({ owner: repo.owner, repo: repo.repo });
-
+    
+    ops.updateVersion(actionType, process.cwd());
     await octokit.repos.merge({
         owner: repo.owner,
         repo: repo.repo,
@@ -20,10 +18,6 @@ const pushReleaseVersion = async () => {
         head: 'dev',
         commit_message: `Releasing Version: ${newVersion}`
     });
-
-    await git.add('.');
-    await git.commit(`Releasing Version: ${newVersion}`);
-    await git.push();
 
     return newVersion;
 };
