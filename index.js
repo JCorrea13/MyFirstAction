@@ -40,7 +40,7 @@ const pushReleaseVersion = async () => {
         path: 'packageJson',
         message: `Updating Package Version to ${newJson.version}`,
         content: newJson,
-        sha: packageJson.sha
+        sha: packageJson.data.sha
     });
 
     /*await octokit.pulls.create({
@@ -58,7 +58,7 @@ const pushReleaseVersion = async () => {
         commit_message: `Releasing Version: ${newVersion}`
     });*/
 
-    return newVersion;
+    return newJson.version;
 };
 
 const configureGit = () => {
