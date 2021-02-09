@@ -6,9 +6,9 @@ const actionType = core.getInput('action-type');
 const git = simpleGit({ baseDir: process.cwd() });
 
 const pushReleaseVersion = async () => {    
-    core.info(`Current Branch ${git.branch()}`);
+    core.info(`Current Branch ${JSON.stringify(git.branch())}`);
     await git.checkout('master');
-    core.info(`Current Branch (after checkout) ${git.branch()}`);
+    core.info(`Current Branch (after checkout) ${JSON.stringify(git.branch())}`);
     await git.pull();
     await git.merge(['origin/dev']);
 
