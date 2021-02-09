@@ -24,6 +24,14 @@ const pushReleaseVersion = async () => {
         ref: `refs/heads/Chore/Sprint${sprint}`,
         sha: masterBranch.data.object.sha
     });
+
+    await octokit.repos.merge({
+        owner: repo.owner,
+        repo: repo.repo,
+        base: `Chore/Sprint${sprint}`,
+        head: 'dev',
+        commit_message: 'Merging Dev'
+    });
     
     const packageJson = await octokit.repos.getContent({ 
         owner: repo.owner,
@@ -31,7 +39,7 @@ const pushReleaseVersion = async () => {
         path: 'package.json',
         ref: `refs/heads/Chore/Sprint${sprint}`
     });
-    
+
     await octokit.repos.createOrUpdateFileContents({
         owner: repo.owner,
         repo: repo.repo,
@@ -48,14 +56,6 @@ const pushReleaseVersion = async () => {
             email: `${process.env.GITHUB_ACTOR}@users.noreply.github.com`,
         },
         branch: `Chore/Sprint${sprint}`
-    });
-
-    await octokit.repos.merge({
-        owner: repo.owner,
-        repo: repo.repo,
-        base: `Chore/Sprint${sprint}`,
-        head: 'dev',
-        commit_message: 'Merging Dev'
     });
 
     await octokit.pulls.create({
