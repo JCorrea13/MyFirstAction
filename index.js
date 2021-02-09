@@ -11,11 +11,17 @@ const repo = github.context.repo;
 const pushReleaseVersion = async () => {
     const newVersion = ops.updateVersion(actionType, process.cwd());
 
+    const masterBranch = await octokit.git.getRef({
+        owner: repo.owner,
+        repo: repo.repo,
+        ref: 'refs/heads/master'
+    });
+
     await octokit.git.createRef({
         owner: repo.owner,
         repo: repo.repo,
-        ref: 'ref',
-        sha: 'sha'
+        ref: 'refs/heads/featureA',
+        sha: masterBranch.object.sha
     });
 
     /*await octokit.pulls.create({
