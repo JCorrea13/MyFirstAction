@@ -14,7 +14,7 @@ const pushReleaseVersion = async () => {
     const masterBranch = await octokit.git.getRef({
         owner: repo.owner,
         repo: repo.repo,
-        ref: 'refs/heads/master'
+        ref: 'heads/master'
     });
 
     core.info(JSON.stringify(masterBranch));
