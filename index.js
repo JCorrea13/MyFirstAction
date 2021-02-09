@@ -34,13 +34,21 @@ const pushReleaseVersion = async () => {
 
     core.info(JSON.stringify(packageJson));
     
-    octokit.repos.createOrUpdateFileContents({
+    await octokit.repos.createOrUpdateFileContents({
         owner: repo.owner,
         repo: repo.repo,
         path: 'packageJson',
         message: `Updating Package Version to ${newJson.version}`,
         content: newJson,
-        sha: packageJson.data.sha
+        sha: packageJson.data.sha,
+        committer: {
+            name: process.env.GITHUB_ACTOR,
+            email: `${process.env.GITHUB_ACTOR}@users.noreply.github.com`,
+        },
+        author: {
+            name: process.env.GITHUB_ACTOR,
+            email: `${process.env.GITHUB_ACTOR}@users.noreply.github.com`,
+        }
     });
 
     /*await octokit.pulls.create({
