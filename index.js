@@ -30,4 +30,4 @@ const pushReleaseVersion = async () => {
 
 const configureGit = () => 
     git.addConfig('user.email', process.env.GITHUB_ACTOR, undefined)
-    .then(() => git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined);
+    .then(() => git.addConfig('user.name', `${process.env.GITHUB_ACTOR}@users.noreply.github.com`, undefined));
