@@ -25,23 +25,23 @@ const pushReleaseVersion = async () => {
         sha: masterBranch.data.object.sha
     });*/
     
-    const repository = await octokit.repos.getContent({ 
+    const packageJson = await octokit.repos.getContent({ 
         owner: repo.owner,
         repo: repo.repo,
-        path: './packageJson',
+        path: 'package.json',
         ref: 'refs/heads/featureA'
     });
 
     core.info(JSON.stringify(repository));
     
-    /*octokit.repos.createOrUpdateFileContents({
+    octokit.repos.createOrUpdateFileContents({
         owner: repo.owner,
         repo: repo.repo,
         path: './packageJson',
         message: 'Updating Package Version',
         content: packageJson,
-        sha: 
-    });*/
+        sha: packageJson.sha
+    });
 
     /*await octokit.pulls.create({
       owner: repo.owner,
