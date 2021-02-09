@@ -14,7 +14,7 @@ const pushReleaseVersion = async () => {
     await octokit.pulls.create({
       owner: repo.owner,
       repo: repo.repo,
-      head: `Chore/ReleaseSprint${newVersion.replace('.', '')}`,
+      head: `Chore/ReleaseSprint`,
       base: 'master',
     });
 
