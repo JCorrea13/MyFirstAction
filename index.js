@@ -63,6 +63,7 @@ const pushReleaseVersion = async () => {
       repo: repo.repo,
       head: `Chore/Sprint${sprint}`,
       base: 'master',
+      title: `Chore/Sprint${sprint}`
     });
 
     return newJson.version;
