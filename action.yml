@@ -6,6 +6,10 @@ inputs:
     description: 'Action Type ( Release | Back )'
     required: true
     default: 'Release'
+  github_token:
+    description: 'Token used to authenticate with GitHub when performing the merge command.'
+    required: false
+    default: ${{ github.token }}
 runs:
   using: node12
   main: index.js
