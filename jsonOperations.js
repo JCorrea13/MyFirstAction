@@ -20,8 +20,6 @@ const updateVersion = (action, cwd) => {
     }
 
     packageJson.version = `${major}.${minor}.${patch}`;
-    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, undefined, 4));
-    
     return packageJson;
 }
 
