@@ -58,12 +58,18 @@ const pushReleaseVersion = async () => {
         branch: `Chore/Sprint${sprint}`
     });
 
-    await octokit.pulls.create({
+    const pr = await octokit.pulls.create({
       owner: repo.owner,
       repo: repo.repo,
       head: `Chore/Sprint${sprint}`,
       base: 'master',
       title: `Chore/Sprint${sprint}`
+    });
+
+    await octokit.pulls.merge({
+        owner: repo.owner,
+        repo: repo.repo,
+        pull_number: pr.data.number
     });
 
     return newJson.version;
@@ -79,11 +85,9 @@ const configureGit = () => {
 configureGit()
 .then(pushReleaseVersion)
 .then((version) => {
-    core.info(`Successfully Released: ${version}`);
+    core.info(`Successfully Released Package Version: ${version}`);
 })
 .catch((err) => {
-    // if(err.git) createMergeBranch();
-
-    console.log(err);
     core.error(err);
+    core.setFailed(core.error);
 });
