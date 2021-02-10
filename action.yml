@@ -13,6 +13,9 @@ inputs:
   sprint:
     description: 'Sprint Number'
     required: true
+  release-notes:
+    description: 'Tag Message'
+    required: true
 runs:
   using: node12
   main: index.js
