@@ -78,7 +78,7 @@ const pushReleaseVersion = async () => {
     await octokit.git.deleteRef({
         owner: repo.owner,
         repo: repo.repo,
-        ref: newRef
+        ref: `heads/Chore/Sprint${sprint}`
     });
 
     await octokit.git.createTag({
