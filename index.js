@@ -90,7 +90,7 @@ const pushReleaseVersion = async () => {
         type: 'commit'
     });
 
-    await octokit.createRef({
+    await octokit.git.createRef({
         owner: repo.repo,
         repo: repo.repo,
         sha: tag.data.sha,
