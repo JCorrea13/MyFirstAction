@@ -81,13 +81,20 @@ const pushReleaseVersion = async () => {
         ref: `heads/Chore/Sprint${sprint}`
     });
 
-    await octokit.git.createTag({
+    const tag = await octokit.git.createTag({
         owner: repo.owner,
         repo: repo.repo,
         object: merge.data.sha,
         message: releaseNotes,
         tag: `v${sprint}`,
         type: 'commit'
+    });
+
+    await octokit.createRef({
+        owner: repo.repo,
+        repo: repo.repo,
+        sha: tag.data.sha,
+        ref: `refs/tags/v${sprint}`
     });
 
     return newJson.version;
