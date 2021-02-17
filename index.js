@@ -106,5 +106,4 @@ pushReleaseVersion()
 })
 .catch((err) => {
     core.error(err);
-    core.setFailed(core.error);
 });
