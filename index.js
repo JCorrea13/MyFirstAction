@@ -91,7 +91,7 @@ const pushReleaseVersion = async () => {
         repo: repo.repo,
         object: merge.data.sha,
         message: releaseNotes,
-        tag: `v${sprint}`,
+        tag: `${sprint}`,
         type: 'commit',
     });
 
@@ -102,13 +102,14 @@ const pushReleaseVersion = async () => {
         owner: repo.owner,
         repo: repo.repo,
         sha: tag.data.object.sha,
-        ref: `refs/tags/v${sprint}`
+        ref: `refs/tags/${sprint}`
     });
 
     await octokit.repos.createRelease({
         owner: repo.owner,
         repo: repo.repo,
-        tag_name: `v${sprint}`,
+        tag_name: sprint,
+        name: `Release ${sprint}`,
         body: releaseNotes
     });
 
