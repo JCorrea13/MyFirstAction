@@ -99,7 +99,7 @@ const pushReleaseVersion = async () => {
     core.info(JSON.stringify(tag));
 
     await octokit.git.createRef({
-        owner: repo.repo,
+        owner: repo.owner,
         repo: repo.repo,
         sha: tag.data.object.sha,
         ref: `refs/tags/v${sprint}`
