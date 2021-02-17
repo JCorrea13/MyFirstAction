@@ -92,17 +92,24 @@ const pushReleaseVersion = async () => {
         object: merge.data.sha,
         message: releaseNotes,
         tag: `v${sprint}`,
-        type: 'commit'
+        type: 'commit',
     });
 
     core.info("Object created");
     core.info(JSON.stringify(tag));
 
-    await octokit.git.createRef({
+    const tagRef = await octokit.git.createRef({
         owner: repo.owner,
         repo: repo.repo,
         sha: tag.data.object.sha,
         ref: `refs/tags/v${sprint}`
+    });
+
+    await octokit.repos.createRelease({
+        owner: repo.owner,
+        repo: repo.repo,
+        tag_name: `v${sprint}`,
+        body: releaseNotes
     });
 
     core.info("Ref Created");
