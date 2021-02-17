@@ -75,16 +75,11 @@ const pushReleaseVersion = async () => {
         pull_number: pr.data.number
     });
 
-    core.info("Merge: ");
-    core.info(JSON.stringify(merge));
-
     await octokit.git.deleteRef({
         owner: repo.owner,
         repo: repo.repo,
         ref: `heads/Chore/Sprint${sprint}`
     });
-
-    core.info("branch deleted");
 
     const tag = await octokit.git.createTag({
         owner: repo.owner,
@@ -94,9 +89,6 @@ const pushReleaseVersion = async () => {
         tag: `${sprint}`,
         type: 'commit',
     });
-
-    core.info("Object created");
-    core.info(JSON.stringify(tag));
 
     const tagRef = await octokit.git.createRef({
         owner: repo.owner,
@@ -113,7 +105,6 @@ const pushReleaseVersion = async () => {
         body: releaseNotes
     });
 
-    core.info("Ref Created");
     return newJson.version;
 };
 
