@@ -13,6 +13,10 @@ inputs:
   sprint:
     description: 'Sprint Number'
     required: true
+  prod-branch:
+    description: 'Prod Branch Name'
+    required: true
+    default: 'master'
   release-notes:
     description: 'Tag Message'
     required: true
