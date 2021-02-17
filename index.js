@@ -6,7 +6,7 @@ const actionType = core.getInput('action-type');
 const token = core.getInput('github_token');
 const sprint = core.getInput('sprint');
 const releaseNotes = core.getInput('release-notes');
-
+const prodBranch = core.getInput('prod-branch');
 
 const octokit = github.getOctokit(token);
 const repo = github.context.repo;
@@ -15,10 +15,17 @@ const pushReleaseVersion = async () => {
     const newJson = ops.updateVersion(actionType, process.cwd());
     const newRef = `refs/heads/Chore/Sprint${sprint}`;
 
+    const repository = await octokit.repos.get({
+        owner: repo.owner,
+        repo: repo.repo
+    });
+
+    const defaultBranchName = repository.data.default_branch;
+
     const masterBranch = await octokit.git.getRef({
         owner: repo.owner,
         repo: repo.repo,
-        ref: 'heads/master'
+        ref: `heads/${prodBranch}`
     });
     
     await octokit.git.createRef({
@@ -32,8 +39,8 @@ const pushReleaseVersion = async () => {
         owner: repo.owner,
         repo: repo.repo,
         base: `Chore/Sprint${sprint}`,
-        head: 'dev',
-        commit_message: 'Merging Dev'
+        head: defaultBranchName,
+        commit_message: `Merging ${defaultBranchName}`
     });
     
     const packageJson = await octokit.repos.getContent({ 
@@ -65,7 +72,7 @@ const pushReleaseVersion = async () => {
       owner: repo.owner,
       repo: repo.repo,
       head: `Chore/Sprint${sprint}`,
-      base: 'master',
+      base: prodBranch,
       title: `Chore/Sprint${sprint}`
     });
 
