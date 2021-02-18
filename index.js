@@ -23,7 +23,7 @@ const pushReleaseVersion = async () => {
     
     const packageJson = await gh.getContent(choreBranchName, 'package.json');
     core.info(JSON.stringify(packageJson));
-    const newJson = ops.updateVersion(packageJson.content);
+    const newJson = ops.updateVersion(packageJson.content, actionType);
     await gh.commitContent(
         'package.json',
         `Updating Package Version to ${newJson.version}`,
