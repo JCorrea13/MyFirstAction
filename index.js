@@ -17,7 +17,6 @@ const pushReleaseVersion = async () => {
     const defaultBranchName = await gh.getDefaultBranch();
     await gh.createNewBranch(prodBranch, choreBranchName);
     await gh.mergeBranches(choreBranchName, defaultBranchName);
-    const pr = await gh.createPR(prodBranch, choreBranchName);
     
     const packageJson = await gh.getContent(choreBranchName, 'package.json');
     const newJson = ops.updateVersion(packageJson.content, actionType);
@@ -28,6 +27,7 @@ const pushReleaseVersion = async () => {
         packageJson.sha,
         choreBranchName);
 
+    const pr = await gh.createPR(prodBranch, choreBranchName);
     const merge = await gh.mergePR(pr.number);
     await gh.deleteBranch(choreBranchName);
 
