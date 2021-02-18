@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const ops = require('./jsonOperations');
 const ghUtilities = require('./utils');
 const actions = require('./actions');
+const { getOctokit } = require('@actions/github');
 
 const actionType = core.getInput('action-type');
 const token = core.getInput('github_token');
