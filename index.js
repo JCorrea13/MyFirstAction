@@ -22,7 +22,7 @@ const pushReleaseVersion = async () => {
     await gh.mergeBranches(choreBranchName, defaultBranchName);
     
     const newJson = ops.updateVersion(actionType, process.cwd());
-    const packageJson = await gh.getContent(newRef, 'package.json');
+    const packageJson = await gh.getContent(choreBranchName, 'package.json');
     await gh.commitContent(
         'package.json',
         `Updating Package Version to ${newJson.version}`,
