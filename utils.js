@@ -80,11 +80,12 @@ const getUtilities = (token, process) => {
           return pr.data;
     };
 
-    const mergePR = async (prNumber) => {
+    const mergePR = async (prNumber, headSha = undefined) => {
         await octokit.pulls.updateBranch({
             owner: repo.owner,
             repo: repo.repo,
-            pull_number: prNumber
+            pull_number: prNumber,
+            expected_head_sha: headSha
         });
         
         const merge = await octokit.pulls.merge({

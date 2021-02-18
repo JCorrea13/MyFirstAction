@@ -22,14 +22,14 @@ const pushReleaseVersion = async () => {
     
     const packageJson = await gh.getContent(choreBranchName, 'package.json');
     const newJson = ops.updateVersion(packageJson.content, actionType);
-    await gh.commitContent(
+    const response = await gh.commitContent(
         'package.json',
         `Updating Package Version to ${newJson.version}`,
         Buffer.from(JSON.stringify(newJson, undefined, 4)).toString('base64'),
         packageJson.sha,
         choreBranchName);
 
-    const merge = await gh.mergePR(pr.number);
+    const merge = await gh.mergePR(pr.number, response.data.commit.sha);
     await gh.deleteBranch(choreBranchName);
 
     await gh.createTag(merge.sha, sprint, releaseNotes);
