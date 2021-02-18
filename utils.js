@@ -126,14 +126,6 @@ const getUtilities = (token, process) => {
             message: message,
             content: content,
             sha: sha,
-            committer: {
-                name: process.env.GITHUB_ACTOR,
-                email: `${process.env.GITHUB_ACTOR}@users.noreply.github.com`,
-            },
-            author: {
-                name: process.env.GITHUB_ACTOR,
-                email: `${process.env.GITHUB_ACTOR}@users.noreply.github.com`,
-            },
             branch: branch
         });
 
