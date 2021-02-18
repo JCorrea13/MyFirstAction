@@ -125,3 +125,5 @@ const getUtilities = (octokit, repo, process) => {
         commitContent
     };
 };
+
+exports.getUtilities = getUtilities;
