@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
 const ops = require('./jsonOperations');
 const ghUtilities = require('./utils');
 const actions = require('./actions');
@@ -10,19 +9,22 @@ const sprint = core.getInput('sprint');
 const releaseNotes = core.getInput('release-notes');
 const prodBranch = core.getInput('prod-branch');
 
-const octokit = github.getOctokit(token);
-const repo = github.context.repo;
-const gh = ghUtilities.getUtilities(octokit, repo, process);
+const gh = ghUtilities.getUtilities(token, process);
 
 const pushReleaseVersion = async () => {
     const choreBranchName = `Chore/Sprint${sprint}`;
     
     const defaultBranchName = await gh.getDefaultBranch();
     await gh.createNewBranch(prodBranch, choreBranchName);
-    await gh.mergeBranches(choreBranchName, defaultBranchName);
+    const mergeInfo = await gh.mergeBranches(choreBranchName, defaultBranchName);
+
+    if(!mergeInfo.files  || mergeInfo.files.length == 0) {
+        core.info('There is no changes to be published');
+        await gh.deleteBranch(choreBranchName);
+        return;
+    }
     
     const packageJson = await gh.getContent(choreBranchName, 'package.json');
-    core.info(JSON.stringify(packageJson));
     const newJson = ops.updateVersion(packageJson.content, actionType);
     await gh.commitContent(
         'package.json',
@@ -31,7 +33,9 @@ const pushReleaseVersion = async () => {
         packageJson.sha,
         choreBranchName);
 
-    const merge = await gh.createAndMergePR(prodBranch, choreBranchName);
+    const pr = await gh.createPR(prodBranch, choreBranchName);
+    const merge = await gh.mergePR(pr.number);
+
     await gh.deleteBranch(choreBranchName);
 
     await gh.createTag(merge.sha, sprint, releaseNotes);
