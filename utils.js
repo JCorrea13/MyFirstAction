@@ -90,7 +90,7 @@ const getUtilities = (token, process) => {
         });*/
 
         await octokit.pulls.update({
-            owner: owner,
+            owner: repo.owner,
             repo: repo.repo,
             pull_number: prNumber
         })
