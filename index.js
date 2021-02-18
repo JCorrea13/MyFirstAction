@@ -28,10 +28,10 @@ const pushReleaseVersion = async () => {
         packageJson.sha,
         choreBranchName);
 
-    /*const merge = await gh.mergePR(pr.number);
+    const merge = await gh.mergePR(pr.number);
     await gh.deleteBranch(choreBranchName);
 
-    await gh.createTag(merge.sha, sprint, releaseNotes);*/
+    await gh.createTag(merge.sha, sprint, releaseNotes);
     return newJson.version;
 };
 
