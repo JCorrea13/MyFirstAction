@@ -16,11 +16,12 @@ const pushReleaseVersion = async () => {
     
     const defaultBranchName = await gh.getDefaultBranch();
     await gh.createNewBranch(prodBranch, choreBranchName);
-    const mergeInfo = await gh.mergeBranches(choreBranchName, defaultBranchName);
-
-    core.info(JSON.stringify(mergeInfo));
-    if(!mergeInfo.files  || mergeInfo.files.length == 0) {
+    await gh.mergeBranches(choreBranchName, defaultBranchName);
+    const pr = await gh.createPR(prodBranch, choreBranchName);
+    
+    if(pr.changed_files === 0) {
         core.info('There is no changes to be published');
+        await gh.closePR(pr.number);
         await gh.deleteBranch(choreBranchName);
         return;
     }
@@ -34,9 +35,7 @@ const pushReleaseVersion = async () => {
         packageJson.sha,
         choreBranchName);
 
-    const pr = await gh.createPR(prodBranch, choreBranchName);
     const merge = await gh.mergePR(pr.number);
-
     await gh.deleteBranch(choreBranchName);
 
     await gh.createTag(merge.sha, sprint, releaseNotes);
