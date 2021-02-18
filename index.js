@@ -13,7 +13,7 @@ const prodBranch = core.getInput('prod-branch');
 const octokit = github.getOctokit(token);
 const repo = github.context.repo;
 const gh = ghUtilities.getUtilities(octokit, repo, process);
-asdf
+
 const pushReleaseVersion = async () => {
     const choreBranchName = `Chore/Sprint${sprint}`;
     
