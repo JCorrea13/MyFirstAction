@@ -36,6 +36,8 @@ const getUtilities = (octokit, repo, process) => {
     };
 
     const createNewBranch = async (baseBranch, newBranchName) => {
+        const newRef = `refs/heads/${newBranchName}`;
+
         const masterBranch = await octokit.git.getRef({
             owner: repo.owner,
             repo: repo.repo,
@@ -45,7 +47,7 @@ const getUtilities = (octokit, repo, process) => {
         await octokit.git.createRef({
             owner: repo.owner,
             repo: repo.repo,
-            ref: newBranchName,
+            ref: newRef,
             sha: masterBranch.data.object.sha
         });
     };
@@ -85,11 +87,12 @@ const getUtilities = (octokit, repo, process) => {
         });
 
     const getContent = async (branch, path) => {
+        const ref = `refs/heads/${branch}`;
         const packageJson = await octokit.repos.getContent({ 
             owner: repo.owner,
             repo: repo.repo,
             path: path,
-            ref: branch
+            ref: ref
         });
 
         return packageJson.data;

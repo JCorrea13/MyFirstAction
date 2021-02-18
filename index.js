@@ -15,27 +15,25 @@ const repo = github.context.repo;
 const gh = ghUtilities.getUtilities(octokit, repo, process);
 
 const pushReleaseVersion = async () => {
-    const newJson = ops.updateVersion(actionType, process.cwd());
-    const newBranchName = `Chore/Sprint${sprint}`;
-    const newRef = `refs/heads/${newBranchName}`;
-
+    const choreBranchName = `Chore/Sprint${sprint}`;
+    
     const defaultBranchName = await gh.getDefaultBranch();
-    await gh.createNewBranch(prodBranch, newRef);
-    await gh.mergeBranches(newBranchName, defaultBranchName);
-
+    await gh.createNewBranch(prodBranch, choreBranchName);
+    await gh.mergeBranches(choreBranchName, defaultBranchName);
+    
+    const newJson = ops.updateVersion(actionType, process.cwd());
     const packageJson = await gh.getContent(newRef, 'package.json');
     await gh.commitContent(
         'package.json',
         `Updating Package Version to ${newJson.version}`,
         Buffer.from(JSON.stringify(newJson, undefined, 4)).toString('base64'),
         packageJson.sha,
-        newBranchName);
-    const merge = await gh.createAndMergePR(prodBranch, newBranchName);
-    
-    await gh.deleteBranch(newBranchName);
+        choreBranchName);
+
+    const merge = await gh.createAndMergePR(prodBranch, choreBranchName);
+    await gh.deleteBranch(choreBranchName);
 
     await gh.createTag(merge.sha, sprint, releaseNotes);
-
     return newJson.version;
 };
 
