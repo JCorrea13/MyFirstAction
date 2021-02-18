@@ -19,13 +19,6 @@ const pushReleaseVersion = async () => {
     await gh.mergeBranches(choreBranchName, defaultBranchName);
     const pr = await gh.createPR(prodBranch, choreBranchName);
     
-    if(pr.changed_files === 0) {
-        core.info('There is no changes to be published');
-        await gh.closePR(pr.number);
-        await gh.deleteBranch(choreBranchName);
-        return;
-    }
-    
     const packageJson = await gh.getContent(choreBranchName, 'package.json');
     const newJson = ops.updateVersion(packageJson.content, actionType);
     await gh.commitContent(
@@ -50,7 +43,9 @@ const action = actionType === actions.types.Release ? pushReleaseVersion : pushM
 action()
 .then((version) => {
     core.info(`Successfully Released Package Version: ${version}`);
+    core.setOutput('success', true);
 })
 .catch((err) => {
     core.error(err);
+    core.setOutput('success', false);
 });

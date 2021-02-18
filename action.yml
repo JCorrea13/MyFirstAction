@@ -1,6 +1,9 @@
 # action.yml
 name: 'Action Type'
 description: 'This action releases a Node Package or Merge Back a Release'
+outputs:
+  success:
+    description: 'Whether the new version was moved successfully to the prod-branch or not'
 inputs:
   action-type:
     description: 'Action Type ( Release | Back )'
