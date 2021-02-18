@@ -30,7 +30,7 @@ const pushReleaseVersion = async () => {
         choreBranchName);
 
     core.info(response.data.commit.sha);
-    const merge = await gh.mergePR(pr.numbers);
+    const merge = await gh.mergePR(pr.number);
     await gh.deleteBranch(choreBranchName);
 
     await gh.createTag(merge.sha, sprint, releaseNotes);
