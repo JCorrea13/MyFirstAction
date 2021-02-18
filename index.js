@@ -18,6 +18,7 @@ const pushReleaseVersion = async () => {
     await gh.createNewBranch(prodBranch, choreBranchName);
     const mergeInfo = await gh.mergeBranches(choreBranchName, defaultBranchName);
 
+    core.info(JSON.stringify(mergeInfo));
     if(!mergeInfo.files  || mergeInfo.files.length == 0) {
         core.info('There is no changes to be published');
         await gh.deleteBranch(choreBranchName);
