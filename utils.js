@@ -68,7 +68,7 @@ const getUtilities = (token, process) => {
         return merge.data;
     }
 
-    const getFilesThatChanged = (baseBranc, headBranch) => {
+    const getFilesThatChanged = async (baseBranc, headBranch) => {
         const result = await octokit.repos.compareCommits({
             owner: repo.owner,
             repo: repo.repo,
