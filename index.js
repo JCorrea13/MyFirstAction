@@ -18,19 +18,23 @@ const pushReleaseVersion = async () => {
     const defaultBranchName = await gh.getDefaultBranch();
     await gh.createNewBranch(prodBranch, choreBranchName);
     await gh.mergeBranches(choreBranchName, defaultBranchName);
-    const pr = await gh.createPR(prodBranch, choreBranchName);
+    const files = await gh.getFilesThatChanged(choreBranchName, defaultBranchName);
     
+    if (files.length == 0){
+        await gh.deleteBranch(choreBranchName);
+        throw new Error('No changes to be merged');
+    }
+
     const packageJson = await gh.getContent(choreBranchName, 'package.json');
     const newJson = ops.updateVersion(packageJson.content, actionType);
-    const response = await gh.commitContent(
+    await gh.commitContent(
         'package.json',
         `Updating Package Version to ${newJson.version}`,
         Buffer.from(JSON.stringify(newJson, undefined, 4)).toString('base64'),
         packageJson.sha,
         choreBranchName);
 
-    core.info(response.data.commit.sha);
-    await sleep(10000);
+    const pr = await gh.createPR(prodBranch, choreBranchName);
     const merge = await gh.mergePR(pr.number);
     await gh.deleteBranch(choreBranchName);
 

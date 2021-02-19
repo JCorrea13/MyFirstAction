@@ -68,6 +68,17 @@ const getUtilities = (token, process) => {
         return merge.data;
     }
 
+    const getFilesThatChanged = (baseBranc, headBranch) => {
+        const result = await octokit.repos.compareCommits({
+            owner: repo.owner,
+            repo: repo.repo,
+            base: baseBranc,
+            head: headBranch
+        });
+
+        result.data.files;
+    }
+
     const createPR = async (baseBranch, headBranch) => {
         const pr = await octokit.pulls.create({
             owner: repo.owner,
@@ -138,7 +149,8 @@ const getUtilities = (token, process) => {
         getContent,
         commitContent,
         mergePR,
-        closePR
+        closePR,
+        getFilesThatChanged
     };
 };
 
