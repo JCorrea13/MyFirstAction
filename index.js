@@ -16,14 +16,14 @@ const pushReleaseVersion = async () => {
     const choreBranchName = `Chore/Sprint${sprint}`;
     
     const defaultBranchName = await gh.getDefaultBranch();
-    await gh.createNewBranch(prodBranch, choreBranchName);
-    await gh.mergeBranches(choreBranchName, defaultBranchName);
-    const files = await gh.getFilesThatChanged(choreBranchName, defaultBranchName);
-    
+
+    const files = await gh.getFilesThatChanged(prodBranch, defaultBranchName);
     if (files.length == 0){
-        await gh.deleteBranch(choreBranchName);
         throw new Error('No changes to be merged');
     }
+
+    await gh.createNewBranch(prodBranch, choreBranchName);
+    await gh.mergeBranches(choreBranchName, defaultBranchName);
 
     const packageJson = await gh.getContent(choreBranchName, 'package.json');
     const newJson = ops.updateVersion(packageJson.content, actionType);
