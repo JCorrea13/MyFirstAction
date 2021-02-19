@@ -14,7 +14,6 @@ const gh = ghUtilities.getUtilities(token, process);
 
 const pushReleaseVersion = async () => {
     const choreBranchName = `Chore/Sprint${sprint}`;
-    
     const defaultBranchName = await gh.getDefaultBranch();
 
     const files = await gh.getFilesThatChanged(prodBranch, defaultBranchName);
