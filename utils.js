@@ -76,7 +76,7 @@ const getUtilities = (token, process) => {
             head: headBranch
         });
 
-        result.data.files;
+        return result.data.files;
     }
 
     const createPR = async (baseBranch, headBranch) => {
